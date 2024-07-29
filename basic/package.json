@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bundle": "webpack --mode development --entry ./app.js --output-path dist"
+    "bundle": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
