@@ -11,7 +11,7 @@
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "build": "webpack --progress"
+    "build": "rm -rf dist && webpack --progress"
   },
   "repository": {
     "type": "git",
