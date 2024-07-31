@@ -10,5 +10,12 @@ html, body {
 }
 
 body {
-  background-color: green;
+  background-color: #226622;
+  background-image: url(bg.png);
+}
+
+.nyangcat {
+  width: 256px;
+  height: 256px;
+  background-image: url(nyancat.jpg);
 }
