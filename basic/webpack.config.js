@@ -1,5 +1,7 @@
 const path = require("path");
+const {  execSync } = require("child_process");
 const MyWebPackPlugin = require("./my-webpack-plugin");
+const { BannerPlugin } = require("webpack");
 
 module.exports = {
   mode: "development",
@@ -35,6 +37,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new MyWebPackPlugin()
+    new MyWebPackPlugin(),
+    new BannerPlugin({
+      banner: `
+        Build Date: ${new Date().toLocaleString()}
+        Commit: ${execSync("git rev-parse --short HEAD")}
+      `
+    })
   ]
 }
