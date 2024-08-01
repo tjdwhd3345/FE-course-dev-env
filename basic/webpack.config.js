@@ -3,6 +3,7 @@ const {  execSync } = require("child_process");
 const MyWebPackPlugin = require("./my-webpack-plugin");
 const { BannerPlugin, DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -62,6 +63,7 @@ module.exports = {
           removeComments: true
         }
         : false
-    })
+    }),
+    new CleanWebpackPlugin()
   ]
 }
