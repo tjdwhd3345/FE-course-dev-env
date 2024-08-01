@@ -4,6 +4,7 @@ const MyWebPackPlugin = require("./my-webpack-plugin");
 const { BannerPlugin, DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
@@ -64,6 +65,7 @@ module.exports = {
         }
         : false
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({ filename: "[name].css"})
   ]
 }
