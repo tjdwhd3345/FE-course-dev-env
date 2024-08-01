@@ -2,6 +2,7 @@ const path = require("path");
 const {  execSync } = require("child_process");
 const MyWebPackPlugin = require("./my-webpack-plugin");
 const { BannerPlugin, DefinePlugin } = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -48,7 +49,19 @@ module.exports = {
       ENV_CUSTOM_1: 1 + 2,
       ENV_CUSTOM_2: `1 + 2`, // 모두 1+2이 계산되어 평가된 값으로 번들파일에 주입된다.
       ENV_CUSTOM_3: JSON.stringify(`1 + 2`), // JSON.stringify 해야 문자열로 변환됨.
-      'API.DOMAIN': JSON.stringify(`http://my-api-dev.morgan.com`)
+      "API.DOMAIN": JSON.stringify(`http://my-api-dev.morgan.com`)
+    }),
+    new HtmlWebpackPlugin({
+      template: "./index.html",
+      templateParameters: {
+        env: process.env.NODE_ENV === "development" ? " (개발용)" : ""
+      },
+      minify: process.env.NODE_ENV !== "development"
+        ? {
+          collapseWhitespace: true,
+          removeComments: true
+        }
+        : false
     })
   ]
 }
