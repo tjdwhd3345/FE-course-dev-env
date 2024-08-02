@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
-    "transform": "babel ./babel-test.js --plugins @babel/plugin-transform-block-scoping,@babel/plugin-transform-arrow-functions"
+    "transform": "babel ./babel-test.js"
   },
   "keywords": [],
   "author": "",
