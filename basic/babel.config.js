@@ -1,5 +1,10 @@
 module.exports = {
   presets: [
-    "./my-babel-preset.js"
+    ["@babel/preset-env", {
+      targets: {
+        chrome: "73",
+        ie: "11"
+     } 
+    }]
   ]
 }
