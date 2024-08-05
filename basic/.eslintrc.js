@@ -1,13 +1,8 @@
 module.exports = {
   env: {
     browser: true,
-    node: true
+    node: true,
+    es6: true,
   },
-  extends: [
-    "eslint:recommended"
-  ],
-  rules: {
-    // "no-unexpected-multiline": "error",
-    // "no-extra-semi": "error"
-  }
-}
+  extends: ["eslint:recommended", "prettier"],
+};
