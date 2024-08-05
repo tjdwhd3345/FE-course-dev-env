@@ -9,7 +9,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    main: "./app.js"
+    // main: "./app.js"
+    main: "./babel-test.js"
   },
   output: {
     path: path.resolve("./dist"),
@@ -36,6 +37,11 @@ module.exports = {
             maxSize: 20 * 1024 // 20kb , 이 값보다 작은 파일은 data URI로 생성함
           }
         }
+      },
+      {
+        test: /\.js$/i,
+        loader: "babel-loader",
+        exclude: /node_modules/
       }
     ]
   },

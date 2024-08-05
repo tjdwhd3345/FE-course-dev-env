@@ -1,1 +1,2 @@
 const alert = message => window.alert(message);
+new Promise((resolve) => resolve);
