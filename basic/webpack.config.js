@@ -1,5 +1,5 @@
 const path = require("path");
-const {  execSync } = require("child_process");
+const { execSync } = require("child_process");
 const MyWebPackPlugin = require("./my-webpack-plugin");
 const { BannerPlugin, DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -9,42 +9,54 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    // main: "./app.js"
-    main: "./babel-test.js"
+    main: "./app.js",
+    // main: "./babel-test.js",
   },
   output: {
     path: path.resolve("./dist"),
-    filename: "[name].js"
+    filename: "[name].js",
   },
+  devServer: {
+    headers: {
+      "X-Custom-Foo": "bar",
+    },
+    static: {
+      // path.resolve("./dist"), // 정적파일을 가져올 경로, default: public
+      directory: path.join(__dirname, "public"),
+    },
+    port: "3000",
+    hot: true,
+  },
+  devtool: "inline-source-map",
   module: {
     rules: [
-      { 
+      {
         test: /\.js$/i,
         exclude: /node_modules/,
-        use: "babel-loader"
+        use: "babel-loader",
       },
-      { 
+      {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"]
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: "asset", // data URI , file 로 export할지 webpack이 옵션에 따라 자동선택
         generator: {
-          filename: "[name][ext]?[hash]" // file export 시 이름 규칙
+          filename: "[name][ext]?[hash]", // file export 시 이름 규칙
         },
         parser: {
           dataUrlCondition: {
-            maxSize: 20 * 1024 // 20kb , 이 값보다 작은 파일은 data URI로 생성함
-          }
-        }
+            maxSize: 20 * 1024, // 20kb , 이 값보다 작은 파일은 data URI로 생성함
+          },
+        },
       },
       {
         test: /\.js$/i,
         loader: "babel-loader",
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   plugins: [
     new MyWebPackPlugin(),
@@ -52,27 +64,28 @@ module.exports = {
       banner: `
         Build Date: ${new Date().toLocaleString()}
         Commit: ${execSync("git rev-parse --short HEAD")}
-      `
+      `,
     }),
     new DefinePlugin({
       ENV_CUSTOM_1: 1 + 2,
       ENV_CUSTOM_2: `1 + 2`, // 모두 1+2이 계산되어 평가된 값으로 번들파일에 주입된다.
       ENV_CUSTOM_3: JSON.stringify(`1 + 2`), // JSON.stringify 해야 문자열로 변환됨.
-      "API.DOMAIN": JSON.stringify(`http://my-api-dev.morgan.com`)
+      "API.DOMAIN": JSON.stringify(`http://my-api-dev.morgan.com`),
     }),
     new HtmlWebpackPlugin({
       template: "./index.html",
       templateParameters: {
-        env: process.env.NODE_ENV === "development" ? " (개발용)" : ""
+        env: process.env.NODE_ENV === "development" ? " (개발용)" : "",
       },
-      minify: process.env.NODE_ENV !== "development"
-        ? {
-          collapseWhitespace: true,
-          removeComments: true
-        }
-        : false
+      minify:
+        process.env.NODE_ENV !== "development"
+          ? {
+              collapseWhitespace: true,
+              removeComments: true,
+            }
+          : false,
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({ filename: "[name].css"})
-  ]
-}
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
+  ],
+};
