@@ -14,7 +14,13 @@ module.exports = {
   },
   output: {
     path: path.resolve("./dist"),
-    filename: "[name].js"
+    filename: "[name].js",
+  },
+  devServer: {
+    static: "./dist",
+    open: true,
+    port: 8000,
+    hot: true,
   },
   module: {
     rules: [
